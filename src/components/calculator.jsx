@@ -1,7 +1,7 @@
 import { useState } from "react";
 export function Calculator() {
 
-    const [displayNumber, setDisplayNumber] = useState(0);
+    const [displayNumber, setDisplayNumber] = useState("0");
     const [addIsPressed, setAddIsPressed] = useState(false);
     const [subtractIsPressed, setSubtractIsPressed] = useState(false);
     const [multiplyIsPressed, setMultiplyIsPressed] = useState(false);
@@ -24,8 +24,15 @@ export function Calculator() {
 
     
     function changeDisplayNumber(number) {
-        if(displayNumber == 0 || previousKeyType == "operator" || previousKeyType == "equals") {
-         setDisplayNumber(number);
+        if(number == ".") {
+            if(displayNumber.includes(".")) {
+                setDisplayNumber(displayNumber);
+                return;
+            }
+        }
+       
+        if(displayNumber == "0" || previousKeyType == "operator" || previousKeyType == "equals") {
+            setDisplayNumber(number);
         } else {
             setDisplayNumber(`${displayNumber}${number}`)
         }
@@ -64,12 +71,6 @@ export function Calculator() {
         return result;
     }
 
-console.log(addClassName);
-console.log(subtractClassName);
-console.log(multiplyClassName);
-console.log(divideClassName);
-console.log(previousKeyType);
-console.log(firstValue);
 
 
 
@@ -106,50 +107,50 @@ console.log(firstValue);
                     setOperator("divide");}
                     } className={`key_operator ${divideClassName}`}>÷</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(7);
+                    changeDisplayNumber("7");
                     setPreviousKeyType("number");}
                     }>7</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(8);
+                    changeDisplayNumber("8");
                     setPreviousKeyType("number");}
                     }>8</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(9);
+                    changeDisplayNumber("9");
                     setPreviousKeyType("number");}
                     }>9</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(4);
+                    changeDisplayNumber("4");
                     setPreviousKeyType("number");}
                     }>4</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(5);
+                    changeDisplayNumber("5");
                     setPreviousKeyType("number");}
                     }>5</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(6);
+                    changeDisplayNumber("6");
                     setPreviousKeyType("number");}
                     }>6</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(1);
+                    changeDisplayNumber("1");
                     setPreviousKeyType("number");}
                     }>1</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(2);
+                    changeDisplayNumber("2");
                     setPreviousKeyType("number");}
                     }>2</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(3);
+                    changeDisplayNumber("3");
                     setPreviousKeyType("number");}
                     }>3</button>
                 <button onClick={()=> {
-                    changeDisplayNumber(0);
+                    changeDisplayNumber("0");
                     setPreviousKeyType("number");}
                     }>0</button>
                 <button onClick={()=> {
                     changeDisplayNumber(".");
                     setPreviousKeyType("number");}
                     }>.</button>
-                <button >AC</button>
+                <button onClick={() => setDisplayNumber(0)}>AC</button>
                 <button onClick={() => {
                     setDisplayNumber(calculate(firstValue, operator, displayNumber));
                     setPreviousKeyType("equals");}
