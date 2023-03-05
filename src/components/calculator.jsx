@@ -1,75 +1,83 @@
 import { useState } from "react";
+
 export function Calculator() {
 
     const [displayNumber, setDisplayNumber] = useState("0");
-    const [addIsPressed, setAddIsPressed] = useState(false);
-    const [subtractIsPressed, setSubtractIsPressed] = useState(false);
-    const [multiplyIsPressed, setMultiplyIsPressed] = useState(false);
-    const [divideIsPressed, setDivideIsPressed] = useState(false);
+    const [isClicked, setIsClicked] = useState("");
     const [operator, setOperator] = useState("");
     const [previousKeyType, setPreviousKeyType] = useState("");
     const [firstValue, setFirstValue] = useState(0);
-
-
-
-
-    const addClassName = addIsPressed ? "addIsPressed" : "";
-    const subtractClassName = subtractIsPressed ? "subtractIsPressed" : "";
-    const multiplyClassName = multiplyIsPressed ? "multiplyIsPressed" : "";
-    const divideClassName = divideIsPressed ? "divideIsPressed" : "";
-
-
-
+   
 
 
     
     function changeDisplayNumber(number) {
-        if(number == ".") {
+        if(number ==+ ".") {
+            if(previousKeyType === "operator" || previousKeyType === "") {
+                setDisplayNumber("0.")
+                setPreviousKeyType("number");
+                return;
+            }
+            
             if(displayNumber.includes(".")) {
                 setDisplayNumber(displayNumber);
                 return;
             }
+           
         }
        
-        if(displayNumber == "0" || previousKeyType == "operator" || previousKeyType == "equals") {
+        if(displayNumber === "0" || previousKeyType === "operator" || previousKeyType === "equals") {
             setDisplayNumber(number);
         } else {
             setDisplayNumber(`${displayNumber}${number}`)
         }
     }
 
-    function unpressKeys() {
-        if(addIsPressed) {
-            setAddIsPressed("");
-        }
-        if(subtractIsPressed) {
-            setSubtractIsPressed("");
-        }
-        if(multiplyIsPressed) {
-            setMultiplyIsPressed("");
-        }
-        if(divideIsPressed) {
-            setDivideIsPressed("");
-        }
-    }
+
 
     function calculate(firstNumber, operator, secondNumber) {
-       
+
+        
         let result;
 
-        if(operator == "add") {
-            result = parseFloat(firstNumber) + parseFloat(secondNumber);
-        } else if(operator == "subtract") {
-            result = parseFloat(firstNumber) - parseFloat(secondNumber);
-        } else if (operator == "multiply") {
-            result = parseFloat(firstNumber) * parseFloat(secondNumber);
-        } else if(operator == "divide") {
-            result = parseFloat(firstNumber)/parseFloat(secondNumber);
+        if(previousKeyType == "number") {
+        
+            setPreviousKeyType("equals");
+
+            if(operator === "add") {
+                result = parseFloat(firstNumber) + parseFloat(secondNumber);
+            } else if(operator === "subtract") {
+                result = parseFloat(firstNumber) - parseFloat(secondNumber);
+            } else if (operator === "multiply") {
+                result = parseFloat(firstNumber) * parseFloat(secondNumber);
+            } else if(operator === "divide") {
+                result = parseFloat(firstNumber)/parseFloat(secondNumber);
+            }
+        } else  {
+            setDisplayNumber(setDisplayNumber);
         }
+
+       
         
         console.log(result);
-        return result;
+        setFirstValue(displayNumber);
+        setDisplayNumber(result);
+       
     }
+
+    function handleClick() {
+        console.log(`first value:${firstValue}`);
+
+        if(firstValue !=0 && previousKeyType == "number")  {
+        calculate(firstValue, operator, displayNumber);
+        setOperator(operator)
+        console.log("end handle click");
+        } 
+    }
+      
+    
+
+    
 
 
 
@@ -81,31 +89,35 @@ export function Calculator() {
     
         <div className="calculator">
             <div className="calculator_display">{displayNumber}</div>
-            <div onClick={() => unpressKeys()} className="calculator_keys" data-previouskeytype={previousKeyType}>
+            <div className="calculator_keys" data-previouskeytype={previousKeyType}>
                 <button onClick={() => {
-                    setAddIsPressed(!addIsPressed);
+                    handleClick();
+                    setIsClicked("addition");
                     setPreviousKeyType("operator");
                     setFirstValue(displayNumber);
                     setOperator("add");}
-                    } className={`key_operator ${addClassName}`} >+</button>
+                    } className={"key_operator" + (isClicked === "addition" ? " isClicked" : "")} >+</button>
                 <button onClick={() => { 
-                    setSubtractIsPressed(!subtractIsPressed);
+                    handleClick();
+                    setIsClicked("subtraction")
                     setPreviousKeyType("operator");
                     setFirstValue(displayNumber);
                     setOperator("subtract");}
-                    } className={`key_operator ${subtractClassName}`} >-</button>
+                    } className={"key_operator" + (isClicked === "subtraction" ? " isClicked" : "")} >-</button>
                 <button onClick={() => {
-                    setMultiplyIsPressed(!multiplyIsPressed);
+                    handleClick();
+                    setIsClicked("multiply");
                     setPreviousKeyType("operator");
                     setFirstValue(displayNumber);
                     setOperator("multiply")}
-                    } className={`key_operator ${multiplyClassName}`}>&times;</button>
+                    } className={"key_operator" + (isClicked === "multiply" ? " isClicked" : "")}>&times;</button>
                 <button onClick={() => { 
-                    setDivideIsPressed(!divideIsPressed);
+                    handleClick();
+                    setIsClicked("divide");
                     setPreviousKeyType("operator");
                     setFirstValue(displayNumber);
                     setOperator("divide");}
-                    } className={`key_operator ${divideClassName}`}>÷</button>
+                    } className={"key_operator" + (isClicked === "divide" ? " isClicked" : "")}>÷</button>
                 <button onClick={()=> {
                     changeDisplayNumber("7");
                     setPreviousKeyType("number");}
@@ -152,9 +164,12 @@ export function Calculator() {
                     }>.</button>
                 <button onClick={() => setDisplayNumber(0)}>AC</button>
                 <button onClick={() => {
-                    setDisplayNumber(calculate(firstValue, operator, displayNumber));
-                    setPreviousKeyType("equals");}
-                    } className="key_equal">=</button>
+                    handleClick();
+                    setOperator("equals");
+                    calculate(firstValue, operator, displayNumber);
+                    setPreviousKeyType("equals");
+                    setIsClicked("equals"); }
+                    } className={"key_equal" + (isClicked === "equals" ? " isClicked" : "")}>=</button>
             </div>
             
             
