@@ -7,6 +7,7 @@ export function Calculator() {
     const [operator, setOperator] = useState("");
     const [previousKeyType, setPreviousKeyType] = useState("");
     const [firstValue, setFirstValue] = useState("0");
+    const [currentResult, setCurrentResult] = useState("0");
 
    
 
@@ -42,7 +43,6 @@ export function Calculator() {
     }
 
 
-
     function calculate(firstNumber, operator, secondNumber) {
         console.log("calculate");
 
@@ -55,35 +55,44 @@ export function Calculator() {
             if(operator === "add") {
                 result = parseFloat(firstNumber) + parseFloat(secondNumber);
                 setFirstValue(result);
+                setCurrentResult(result);
             } else if(operator === "subtract") {
                 result = parseFloat(firstNumber) - parseFloat(secondNumber);
                 setFirstValue(result);
+                setCurrentResult(result);
             } else if (operator === "multiply") {
                 result = parseFloat(firstNumber) * parseFloat(secondNumber);
                 setFirstValue(result);
+                setCurrentResult(result);
             } else if(operator === "divide") {
                 result = parseFloat(firstNumber)/parseFloat(secondNumber);
                 setFirstValue(result);
+                setCurrentResult(result);
             }
         } else  {
-            setDisplayNumber(setDisplayNumber);
+            setDisplayNumber(displayNumber);
         }
 
        
         
         console.log(result);
+        console.log(currentResult);
 
         setDisplayNumber(result);
        
     }
 
     
+    // addition should activate calculation when first value isnt 0 and previous key type is number
 
 
 
     function handleAdditionClick() {
-        
+     
         console.log("handleAdditionClick");
+        console.log(`result ${currentResult}`)
+        console.log(`previousKeyType ${previousKeyType}`);
+        console.log(`firstValue ${firstValue}`);
         if(firstValue === "0") {
             setIsClicked("addition");
             setPreviousKeyType("operator");
@@ -92,11 +101,12 @@ export function Calculator() {
             console.log("1");
         }
 
-        if(firstValue != "0") {
-            setOperator("equals");
+        if(firstValue != "0"  ) {
+
+            setOperator("add");
             calculate(firstValue, operator, displayNumber);
-            setPreviousKeyType("equals");
-            setIsClicked("equals");
+            setPreviousKeyType("operator");
+            setIsClicked("addition");
         
             console.log("2");
         }
@@ -113,9 +123,9 @@ export function Calculator() {
         }
 
         if(firstValue != "0") {
-            setIsClicked("equals");
-            setPreviousKeyType("equals");
-            setOperator("equals");
+            setIsClicked("subtraction");
+            setPreviousKeyType("operator");
+            setOperator("subtract");
             calculate(firstValue, operator, displayNumber);
            
         }
@@ -132,9 +142,9 @@ export function Calculator() {
         }
 
         if(firstValue != "0") {
-            setIsClicked("equals");
-            setPreviousKeyType("equals");
-            setOperator("equals");
+            setIsClicked("multiply");
+            setPreviousKeyType("operator");
+            setOperator("multiply");
             calculate(firstValue, operator, displayNumber);
             
         }
@@ -151,9 +161,9 @@ export function Calculator() {
         }
 
         if(firstValue != "0") {
-            setIsClicked("equals");
-            setPreviousKeyType("equals");
-            setOperator("equals");
+            setIsClicked("divide");
+            setPreviousKeyType("operator");
+            setOperator("divide");
             calculate(firstValue, operator, displayNumber);
         }
     }
@@ -172,8 +182,15 @@ export function Calculator() {
 
     function handleNumberClick(number) {
         console.log("handleNumberClick");
+        console.log(`previousKeyType ${previousKeyType}`);
+        console.log(`firstValue ${firstValue}`);
         changeDisplayNumber(number);
         setPreviousKeyType("number");
+
+        // if (currentResult != "0" && previousKeyType === "equals") {
+
+        // }
+    
     
 
     }
