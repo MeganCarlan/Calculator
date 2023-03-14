@@ -54,19 +54,23 @@ export function Calculator() {
 
             if(operator === "add") {
                 result = parseFloat(firstNumber) + parseFloat(secondNumber);
+                console.log("add")
                 setFirstValue(result);
                 setCurrentResult(result);
             } else if(operator === "subtract") {
                 result = parseFloat(firstNumber) - parseFloat(secondNumber);
                 setFirstValue(result);
+                console.log("subtract")
                 setCurrentResult(result);
             } else if (operator === "multiply") {
                 result = parseFloat(firstNumber) * parseFloat(secondNumber);
                 setFirstValue(result);
+                console.log("mult")
                 setCurrentResult(result);
             } else if(operator === "divide") {
                 result = parseFloat(firstNumber)/parseFloat(secondNumber);
                 setFirstValue(result);
+                console.log("divide")
                 setCurrentResult(result);
             }
         } else  {
@@ -75,8 +79,8 @@ export function Calculator() {
 
        
         
-        console.log(result);
-        console.log(currentResult);
+        console.log(`result ${result}`);
+        console.log(`currentResult ${currentResult}`);
 
         setDisplayNumber(result);
        
@@ -110,6 +114,10 @@ export function Calculator() {
         
             console.log("2");
         }
+
+        if(previousKeyType == "operator") {
+            setDisplayNumber(displayNumber);
+        }
     }
 
     function handleSubtractionClick() {
@@ -128,6 +136,10 @@ export function Calculator() {
             setOperator("subtract");
             calculate(firstValue, operator, displayNumber);
            
+        }
+
+        if(previousKeyType == "operator") {
+            setDisplayNumber(displayNumber);
         }
     }
 
@@ -148,6 +160,10 @@ export function Calculator() {
             calculate(firstValue, operator, displayNumber);
             
         }
+
+        if(previousKeyType == "operator") {
+            setDisplayNumber(displayNumber);
+        }
     }
 
     function handleDivideClick() {
@@ -166,17 +182,38 @@ export function Calculator() {
             setOperator("divide");
             calculate(firstValue, operator, displayNumber);
         }
+
+        if(previousKeyType == "operator") {
+            setDisplayNumber(displayNumber);
+        }
     }
 
     function handleEqualClick() {
        
-        
+        console.log("handleEqualClick");
+        console.log(`currentResult ${currentResult}`);
 
        if(firstValue != "0" && previousKeyType === "number") {
+             console.log("****")
+             console.log(`displayNumber ${displayNumber}`);
+             console.log(`firstValue ${firstValue}`);
+             console.log(`operator ${operator}`)
             setOperator("equals");
+
             calculate(firstValue, operator, displayNumber);
             setPreviousKeyType("equals");
             setIsClicked("equals");
+            setFirstValue(currentResult);
+       }
+
+       if (previousKeyType === "equals") {
+        console.log("!!!!");
+        console.log(`displayNumber ${displayNumber}`);
+             console.log(`firstValue ${firstValue}`);
+             console.log(`operator ${operator}`)
+        changeDisplayNumber(currentResult);
+        console.log(displayNumber)
+       
        }
     }
 
@@ -187,11 +224,6 @@ export function Calculator() {
         changeDisplayNumber(number);
         setPreviousKeyType("number");
 
-        // if (currentResult != "0" && previousKeyType === "equals") {
-
-        // }
-    
-    
 
     }
       
