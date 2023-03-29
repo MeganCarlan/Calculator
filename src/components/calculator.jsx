@@ -15,17 +15,14 @@ export function Calculator() {
     
     function changeDisplayNumber(number) {
 
-        console.log("changeDisplayNumber");
         if(number == ".") {
             if(previousKeyType === "operator" || previousKeyType === "") {
-                console.log("1")
                 setDisplayNumber("0.")
                 setPreviousKeyType("number");
                 return;
             }
             
             if(displayNumber.includes(".")) {
-                console.log("2");
                 setDisplayNumber(displayNumber);
                 return;
             }
@@ -34,19 +31,15 @@ export function Calculator() {
        
         if(displayNumber === "0" || previousKeyType === "operator" || previousKeyType === "equals") {
             setDisplayNumber(number);
-            console.log("3");
         } else {
-            setDisplayNumber(`${displayNumber}${number}`)
-            console.log("4");
+            setDisplayNumber(`${displayNumber}${number}`);
         }
         
     }
 
 
     function calculate(firstNumber, operator, secondNumber) {
-        console.log("calculate");
 
-        
         let result;
 
         if(previousKeyType === "number") {
@@ -54,55 +47,36 @@ export function Calculator() {
 
             if(operator === "add") {
                 result = parseFloat(firstNumber) + parseFloat(secondNumber);
-                console.log("add")
                 setFirstValue(result);
                 setCurrentResult(result);
             } else if(operator === "subtract") {
                 result = parseFloat(firstNumber) - parseFloat(secondNumber);
                 setFirstValue(result);
-                console.log("subtract")
                 setCurrentResult(result);
             } else if (operator === "multiply") {
                 result = parseFloat(firstNumber) * parseFloat(secondNumber);
                 setFirstValue(result);
-                console.log("mult")
                 setCurrentResult(result);
             } else if(operator === "divide") {
                 result = parseFloat(firstNumber)/parseFloat(secondNumber);
                 setFirstValue(result);
-                console.log("divide")
                 setCurrentResult(result);
             }
         } else  {
             setDisplayNumber(displayNumber);
         }
 
-       
-        
-        console.log(`result ${result}`);
-        console.log(`currentResult ${currentResult}`);
-
         setDisplayNumber(result);
        
-    }
-
-    
-    // addition should activate calculation when first value isnt 0 and previous key type is number
-
-
+    } 
 
     function handleAdditionClick() {
      
-        console.log("handleAdditionClick");
-        console.log(`result ${currentResult}`)
-        console.log(`previousKeyType ${previousKeyType}`);
-        console.log(`firstValue ${firstValue}`);
         if(firstValue === "0") {
             setIsClicked("addition");
             setPreviousKeyType("operator");
             setOperator("add");
             setFirstValue(displayNumber);
-            console.log("1");
         }
 
         if(firstValue != "0"  ) {
@@ -111,8 +85,6 @@ export function Calculator() {
             calculate(firstValue, operator, displayNumber);
             setPreviousKeyType("operator");
             setIsClicked("addition");
-        
-            console.log("2");
         }
 
         if(previousKeyType == "operator") {
@@ -122,7 +94,6 @@ export function Calculator() {
 
     function handleSubtractionClick() {
         
-        console.log("handleSubtractionClick");
         if(firstValue === "0") {
             setIsClicked("subtraction");
             setPreviousKeyType("operator");
@@ -144,8 +115,7 @@ export function Calculator() {
     }
 
     function handleMultiplyClick() {
-        
-        console.log("handleMultiplyClick");
+    
         if(firstValue === "0") {
             setIsClicked("multiply");
             setPreviousKeyType("operator");
@@ -167,8 +137,6 @@ export function Calculator() {
     }
 
     function handleDivideClick() {
-        
-        console.log("handleDivideClick");
         if(firstValue === "0") {
             setIsClicked("divide");
             setPreviousKeyType("operator");
@@ -189,17 +157,11 @@ export function Calculator() {
     }
 
     function handleEqualClick() {
-       
-        console.log("handleEqualClick");
-        console.log(`currentResult ${currentResult}`);
+   
 
        if(firstValue != "0" && previousKeyType === "number") {
-             console.log("****")
-             console.log(`displayNumber ${displayNumber}`);
-             console.log(`firstValue ${firstValue}`);
-             console.log(`operator ${operator}`)
+         
             setOperator("equals");
-
             calculate(firstValue, operator, displayNumber);
             setPreviousKeyType("equals");
             setIsClicked("equals");
@@ -207,20 +169,11 @@ export function Calculator() {
        }
 
        if (previousKeyType === "equals") {
-        console.log("!!!!");
-        console.log(`displayNumber ${displayNumber}`);
-             console.log(`firstValue ${firstValue}`);
-             console.log(`operator ${operator}`)
         changeDisplayNumber(currentResult);
-        console.log(displayNumber)
-       
        }
     }
 
     function handleNumberClick(number) {
-        console.log("handleNumberClick");
-        console.log(`previousKeyType ${previousKeyType}`);
-        console.log(`firstValue ${firstValue}`);
         changeDisplayNumber(number);
         setPreviousKeyType("number");
 
