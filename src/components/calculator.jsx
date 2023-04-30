@@ -38,7 +38,6 @@ export function Calculator() {
 
 
     function calculate(firstNumber, operator, secondNumber) {
-       
         let result;
 
         if(previousKeyType === "number") {
@@ -67,12 +66,7 @@ export function Calculator() {
 
         setDisplayNumber(result);
        
-    }
-
-    
-    // addition should activate calculation when first value isnt 0 and previous key type is number
-
-
+    } 
 
     function handleAdditionClick() {
      
@@ -98,7 +92,6 @@ export function Calculator() {
 
     function handleSubtractionClick() {
         
-        console.log("handleSubtractionClick");
         if(firstValue === "0") {
             setIsClicked("subtraction");
             setPreviousKeyType("operator");
@@ -120,7 +113,7 @@ export function Calculator() {
     }
 
     function handleMultiplyClick() {
-
+    
         if(firstValue === "0") {
             setIsClicked("multiply");
             setPreviousKeyType("operator");
@@ -142,7 +135,6 @@ export function Calculator() {
     }
 
     function handleDivideClick() {
-        
         if(firstValue === "0") {
             setIsClicked("divide");
             setPreviousKeyType("operator");
@@ -163,8 +155,10 @@ export function Calculator() {
     }
 
     function handleEqualClick() {
-       
+   
+
        if(firstValue != "0" && previousKeyType === "number") {
+         
             setOperator("equals");
             calculate(firstValue, operator, displayNumber);
             setPreviousKeyType("equals");
